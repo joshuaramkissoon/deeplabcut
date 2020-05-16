@@ -2,17 +2,8 @@ import deeplabcut
 import os
 from os import listdir
 
-
-
-
-
-
-
-def setup(projectName, videos):
-    path_config = deeplabcut.create_new_project(projectName, 'joshua', videos) 
-    print(path_config)
-    # extract_frames(path_config)
-    # label_frames(path_config)
+def setupProject(projectName, videos):
+    return deeplabcut.create_new_project(projectName, 'joshua', videos) 
     
 def extract_frames(path_config):
     deeplabcut.extract_frames(path_config, 'automatic', 'kmeans')
@@ -28,14 +19,18 @@ def getVideos(view, path):
     return videos
 
 if __name__ == '__main__':
+    setup = False
     video_path = os.path.expanduser('~/Documents/fyp_videos/Angle Robustness/')
     view = 'side'
     videos = getVideos(view, video_path)
     projectName = 'angle-robustness-' + view
-    # setup(projectName, videos)
-    path = '/Users/joshuaramkissoon/Documents/fyp_videos/angle-robustness-top-joshua-2020-05-15/config.yaml'
-    # extract_frames(path)
-    label_frames(path)
+    if setup:
+        path = setupProject(projectName, videos)
+        print(path)
+    else:
+        path = '/Users/joshuaramkissoon/Documents/fyp_videos/angle-robustness-side-joshua-2020-05-16/config.yaml'
+        extract_frames(path)
+        label_frames(path)
 
 
 
